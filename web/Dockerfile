@@ -1,10 +1,8 @@
-FROM ubuntu
-RUN apt-get update
-RUN apt-get install golang-go -y
+FROM golang:alpine
 COPY . .
 RUN go build dispatcher.go
-FROM ubuntu
-COPY . .
-COPY --from=0 ./dispatcher ./dispatcher
+FROM alpine
+COPY --from=0 /go/dispatcher .
+COPY static static
 CMD ["./dispatcher"]
 
